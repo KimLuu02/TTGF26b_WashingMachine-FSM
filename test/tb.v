@@ -19,7 +19,7 @@ module tb ();
   reg ena;
   // reg [7:0] ui_in;
   reg [7:0] uio_in;
-  // wire [7:0] uo_out;
+  wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
 
@@ -30,7 +30,7 @@ module tb ();
   wire spin_motor = uo_out[2]; // Spin motor
   wire wash_motor = uo_out[1]; // Wash motor
   wire water_valve = uo_out[0]; // Water valve
-  
+
   wire rst_n = reset_in; // Active low reset
 
 `ifdef GL_TEST
