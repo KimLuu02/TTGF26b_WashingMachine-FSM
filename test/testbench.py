@@ -103,11 +103,15 @@ async def req_5_warning_LED(dut):
     cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 1
+    dut.reset_in.value = 0
     dut.mode_select.value = 0
     dut.door_closed.value = 0
 
     # Testing
+    await RisingEdge(dut.clk)
+    #Test quick mode
+    dut.reset_in.value = 1
+    await RisingEdge(dut.clk)
     dut.start.value = 1
     await RisingEdge(dut.clk)
 
@@ -115,6 +119,7 @@ async def req_5_warning_LED(dut):
 
     if not GATE_LEVEL:
         assert dut.user_project.top_system_inst.warning.value == 1, "REQ-5 failed: Warning is not on"
+        
     assert dut.done_led.value == 1, "REQ-5 failed: LED not on"
 
     dut._log.info("Req-5 Passed")
@@ -142,9 +147,10 @@ async def req_6_warning_LED(dut):
 
     await ReadOnly()
 
-    if GATE_LEVEL:
+    if not GATE_LEVEL:
         assert dut.user_project.top_system_inst.timer_en.value == 1, "REQ-6 failed: timer not enabled"
         assert dut.user_project.top_system_inst.warning.value == 0, "REQ-6 failed: Warning active"
+
     assert dut.water_valve.value == 1, "REQ-6 failed: water valve was not turned on"
 
     dut._log.info("Req-6 Passed")
