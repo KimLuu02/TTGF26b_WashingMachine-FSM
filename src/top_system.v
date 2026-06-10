@@ -11,7 +11,7 @@ module top_system(
     output wire water_valve,
     output wire wash_motor,
     output wire spin_motor,
-    output wire done_led,
+    output wire done_led
 );
 
 wire start_cycle;
