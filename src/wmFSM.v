@@ -28,7 +28,7 @@ reg [2:0] next_state;
 
 // State Register
 always @(posedge clk) begin
-    if (!reset_in) 
+    if (!reset_in) begin
         current_state <= IDLE;
         water_valve <= 1'b0;
         wash_motor <= 1'b0;
@@ -36,6 +36,7 @@ always @(posedge clk) begin
         done_led <= 1'b0;
         timer_en <= 1'b0;
         timer_sel <= 1'b0;
+    end
     else 
         current_state <= next_state;
     
