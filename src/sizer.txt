@@ -1,0 +1,30 @@
+**** module/scope: top_system
+     Flip-Flops   : 0
+     Logic Gates  : 0
+**** module/scope: top_system.fsm_inst
+     Flip-Flops   : 3
+     Logic Gates  : 63
+     MUX[2]: 27 slices
+     LPM[5]: 14 unaccounted
+     LOG[13]: 1 unaccounted
+     LOG[14]: 1 unaccounted
+**** module/scope: top_system.timer_inst
+     Flip-Flops   : 6
+     Logic Gates  : 87
+     ADDER[5]: 1 units
+     MAGNITUDE[5]: 1 units
+     MUX[2]: 32 slices
+     LOG[13]: 1 unaccounted
+     LOG[14]: 1 unaccounted
+**** module/scope: top_system.ui_inst
+     Flip-Flops   : 0
+     Logic Gates  : 3
+**** TOTALS
+     Flip-Flops   : 9
+     Logic Gates  : 153
+     ADDER[5]: 1 units
+     MAGNITUDE[5]: 1 units
+     MUX[2]: 59 slices
+     LPM[5]: 14 unaccounted
+     LOG[13]: 2 unaccounted
+     LOG[14]: 2 unaccounted

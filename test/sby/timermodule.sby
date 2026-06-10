@@ -1,0 +1,16 @@
+[tasks]
+verification
+
+[options]
+verification: mode bmc
+verification: depth 20
+
+[engines]
+smtbmc
+
+[files]
+../../src/timermodule.v
+
+[script]
+read -formal timermodule.v
+prep -top timer_module

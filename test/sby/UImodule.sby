@@ -1,0 +1,17 @@
+[tasks]
+verification
+
+[options]
+verification: mode bmc
+verification: depth 5
+
+[engines]
+smtbmc
+
+[files]
+../../src/UImodule.v
+
+[script]
+
+read -formal UImodule.v
+prep -top ui_module

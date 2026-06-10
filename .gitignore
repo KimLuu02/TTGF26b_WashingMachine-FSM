@@ -11,3 +11,8 @@ test/sim_build
 test/__pycache__/
 test/results.xml
 test/gate_level_netlist.v
+test/sby/timermodule
+test/sby/timermodule_verification
+test/sby/UImodule
+test/sby/UImodule_verification
+test/testbench/sim_build
