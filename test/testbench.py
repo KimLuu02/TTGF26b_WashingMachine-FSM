@@ -112,6 +112,7 @@ async def req_5_warning_LED(dut):
     #Test quick mode
     dut.reset_in.value = 1
     await RisingEdge(dut.clk)
+    dut.door_closed.value = 0
     dut.start.value = 1
     await RisingEdge(dut.clk)
 
@@ -125,7 +126,7 @@ async def req_5_warning_LED(dut):
     dut._log.info("Req-5 Passed")
 
 @cocotb.test()
-async def req_6_warning_LED(dut):
+async def req_6_start_washing_cycle(dut):
     """ REQ-6:  After succefully starting the washing machine, the washing cycle begins """
     cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 

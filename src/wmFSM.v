@@ -96,6 +96,8 @@ timer_sel = 1'b0;
 
     WARN: begin
         done_led = 1'b1;
+        if(next_state == IDLE)
+            timer_en = 1'b0;
     end
 
     FILL: begin
