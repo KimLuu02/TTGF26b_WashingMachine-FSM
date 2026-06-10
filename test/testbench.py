@@ -15,7 +15,7 @@ async def req_1_mode_select(dut):
 
     #Set initial inputs
     dut.start.value = 0
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     dut.mode_select.value = 0
     dut.door_closed.value = 1
 

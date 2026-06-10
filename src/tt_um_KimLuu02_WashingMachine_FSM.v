@@ -21,10 +21,14 @@ module tt_um_KimLuu02_WashingMachine_FSM (
   wire mode_select = ui_in[1]; // mode_select signal from ui_in[1]
   wire door_closed = ui_in[2]; // door_closed signal from ui_in[2]
 
-  wire water_valve = uo_out[0]; // water_valve control signal
-  wire wash_motor = uo_out[1]; // wash_motor control signal
-  wire spin_motor = uo_out[2]; // spin_motor control signal
-  wire done_led = uo_out[3]; // done_led control signal
+  wire water_valve;
+  uo_out[0] = water_valve; // water_valve control signal
+  wire wash_motor;
+  uo_out[1] = wash_motor; // wash_motor control signal
+  wire spin_motor;
+  uo_out[2] = spin_motor; // spin_motor control signal
+  wire done_led;
+  uo_out[3] = done_led; // done_led control signal
 
   assign uio_out = 8'b0; // No outputs on uio_out
   assign uio_oe = 8'b0; // All uio pins are inputs
