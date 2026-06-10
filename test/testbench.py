@@ -114,6 +114,7 @@ async def req_5_warning_LED(dut):
     await RisingEdge(dut.clk)
     dut.door_closed.value = 0
     dut.start.value = 1
+    await ClockCycles(dut.clk, 5) # 3 cycles
     await RisingEdge(dut.clk)
 
     await ReadOnly()
