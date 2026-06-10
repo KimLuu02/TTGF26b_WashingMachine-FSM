@@ -30,12 +30,12 @@ reg [2:0] next_state;
 always @(posedge clk) begin
     if (!reset_in) 
         current_state <= IDLE;
-        water_valve = 1'b0;
-        wash_motor = 1'b0;
-        spin_motor = 1'b0;
-        done_led = 1'b0;
-        timer_en = 1'b0;
-        timer_sel = 1'b0;
+        water_valve <= 1'b0;
+        wash_motor <= 1'b0;
+        spin_motor <= 1'b0;
+        done_led <= 1'b0;
+        timer_en <= 1'b0;
+        timer_sel <= 1'b0;
     else 
         current_state <= next_state;
     
