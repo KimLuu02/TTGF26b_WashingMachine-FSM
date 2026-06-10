@@ -113,7 +113,7 @@ async def req_5_warning_LED(dut):
 
     await ReadOnly()
 
-    if GATE_LEVEL:
+    if not GATE_LEVEL:
         assert dut.user_project.top_system_inst.warning.value == 1, "REQ-5 failed: Warning is not on"
     assert dut.done_led.value == 1, "REQ-5 failed: LED not on"
 
