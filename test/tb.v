@@ -24,14 +24,14 @@ module tb ();
   wire [7:0] uio_oe;
 
                       // 7, 6, 5, 4, 3, 2, 1, 0
-  wire [7:0] ui_in = {5'b0, door_closed, mode_select, start}; //  ui_in[2:0] are the control signals
+  wire [7:0] ui_in = {5'b00000, door_closed, mode_select, start}; //  ui_in[2:0] are the control signals
 
   wire done_led = uo_out[3]; // Done LED
   wire spin_motor = uo_out[2]; // Spin motor
   wire wash_motor = uo_out[1]; // Wash motor
   wire water_valve = uo_out[0]; // Water valve
 
-  wire rst_n = reset_in; // Active low reset
+  wire reset_in; // Active low reset
 
 `ifdef GL_TEST
   wire VPWR = 1'b1;
@@ -54,7 +54,7 @@ module tb ();
       .uio_oe (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)
       .ena    (ena),      // enable - goes high when design is selected
       .clk    (clk),      // clock
-      .rst_n  (rst_n)     // not reset
+      .rst_n  (reset_in)     // not reset
   );
 
 endmodule
