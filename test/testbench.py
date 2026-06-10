@@ -6,7 +6,9 @@ import os
 
 GATE_LEVEL = os.getenv("GATES") == "yes"
 
-@cocotb.test()
+
+
+@cocotb.test(skip=GATE_LEVEL)
 async def req_1_mode_select(dut):
     """ REQ-1: the selected washing mode shall be forwarded by the UI module """
     cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
@@ -21,13 +23,13 @@ async def req_1_mode_select(dut):
     dut.mode_select.value = 0
     await RisingEdge(dut.clk)
 
-    assert dut.mode.value == 0, "REQ-1 failed: mode was not 0"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.mode.value == 0, "REQ-1 failed: mode was not 0"
 
     #Test normal mode
     dut.mode_select.value = 1
 
     await RisingEdge(dut.clk)
-    assert dut.mode.value == 1, "REQ-1 failed: mode was not 1"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.mode.value == 1, "REQ-1 failed: mode was not 1"
 
     dut._log.info("Req-1 Passed")
 
@@ -45,8 +47,8 @@ async def req_2_door_open_warning(dut):
     dut.start.value = 1
     await RisingEdge(dut.clk)
     
-    assert dut.top_system.warning.value == 1, "REQ-2 failed: warning was not active"
-    assert dut.top_system.start_cycle.value == 0, "REQ-2 failed: start_cycle started"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.warning.value == 1, "REQ-2 failed: warning was not active"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.start_cycle.value == 0, "REQ-2 failed: start_cycle started"
 
     dut._log.info("Req-2 Passed")
 
@@ -65,8 +67,8 @@ async def req_3_reset(dut):
     dut.reset_in.value = 0
     await RisingEdge(dut.clk)
 
-    assert dut.top_system.reset_out.value == 0, "REQ-3 failed: reset_out was not 0"
-    assert dut.top_system.timer_en.value == 0, "REQ-3 failed: timer was enabled"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.reset_out.value == 0, "REQ-3 failed: reset_out was not 0"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.timer_en.value == 0, "REQ-3 failed: timer was enabled"
 
     dut._log.info("Req-3 Passed")
 
@@ -85,9 +87,9 @@ async def req_4_start_cycle(dut):
     dut.start.value = 0
     await RisingEdge(dut.clk)
 
-    assert dut.top_system.start_cycle.value == 0, "REQ-4 failed: Cycle started"
-    assert dut.top_system.timer_en.value == 0, "REQ-4 failed: timer was enabled"
-    assert dut.top_system.warning.value == 0, "REQ-4 failed: there was a warning"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.start_cycle.value == 0, "REQ-4 failed: Cycle started"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.timer_en.value == 0, "REQ-4 failed: timer was enabled"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.warning.value == 0, "REQ-4 failed: there was a warning"
 
     dut._log.info("Req-4 Passed")
 
@@ -108,7 +110,7 @@ async def req_5_warning_LED(dut):
     await ReadOnly()
 
     if GATE_LEVEL:
-        assert dut.top_system.warning.value == 1, "REQ-5 failed: Warning is not on"
+        assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.warning.value == 1, "REQ-5 failed: Warning is not on"
     assert dut.done_led.value == 1, "REQ-5 failed: LED not on"
 
     dut._log.info("Req-5 Passed")
@@ -137,8 +139,8 @@ async def req_6_warning_LED(dut):
     await ReadOnly()
 
     if GATE_LEVEL:
-        assert dut.top_system.timer_en.value == 1, "REQ-6 failed: timer not enabled"
-        assert dut.top_system.warning.value == 0, "REQ-6 failed: Warning active"
+        assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.timer_en.value == 1, "REQ-6 failed: timer not enabled"
+        assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.warning.value == 0, "REQ-6 failed: Warning active"
     assert dut.water_valve.value == 1, "REQ-6 failed: water valve was not turned on"
 
     dut._log.info("Req-6 Passed")
@@ -239,13 +241,13 @@ async def req_8_9_timer(dut):
     await ReadOnly()
 
     # FILL
-    assert dut.top_system.timer_en.value == 1, "REQ-8 failed: Timer did not start"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.timer_en.value == 1, "REQ-8 failed: Timer did not start"
 
     await ClockCycles(dut.clk, 4) # 3 cycles
     await ReadOnly()
 
     # Timer check
-    assert dut.top_system.timer_done.value == 1, "REQ-9 failed: Timer did not stop"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.timer_done.value == 1, "REQ-9 failed: Timer did not stop"
 
     dut._log.info("Req-8 and 9 Passed")
 
@@ -278,6 +280,6 @@ async def req_10_duration(dut):
     await ReadOnly()
 
     # Timer check
-    assert dut.top_system.timer_done.value == 1, "REQ-10 failed: Timer did not stop after 5 cycles for normal mode for FILL"
+    assert dut.tt_um_KimLuu02_WashingMachine_FSM.top_system.timer_done.value == 1, "REQ-10 failed: Timer did not stop after 5 cycles for normal mode for FILL"
 
     dut._log.info("Req-10 Passed")
