@@ -16,3 +16,4 @@ test/sby/timermodule_verification
 test/sby/UImodule
 test/sby/UImodule_verification
 test/testbench/sim_build
+results.xml

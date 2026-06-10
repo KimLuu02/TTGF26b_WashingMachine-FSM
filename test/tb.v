@@ -23,9 +23,9 @@ module tb ();
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
 
-  wire door_closed;
-  wire mode_select;
-  wire start;
+  reg door_closed;
+  reg mode_select;
+  reg start;
                       // 7, 6, 5, 4, 3, 2, 1, 0
   wire [7:0] ui_in = {5'b00000, door_closed, mode_select, start}; //  ui_in[2:0] are the control signals
 
@@ -34,7 +34,7 @@ module tb ();
   wire wash_motor = uo_out[1]; // Wash motor
   wire water_valve = uo_out[0]; // Water valve
 
-  wire reset_in; // Active low reset
+  reg reset_in; // Active low reset
 
 `ifdef GL_TEST
   wire VPWR = 1'b1;
