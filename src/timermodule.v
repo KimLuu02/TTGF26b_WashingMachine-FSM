@@ -13,9 +13,9 @@ reg [4:0] duration;
 
 always @(*) begin
     case (timer_sel)
-        1'b1: duration = mode ? 4'b1010 : 4'b0101; 
-        1'b0: duration = mode ? 4'b0101 : 4'b0011;
-        default: duration = 4'b1010;
+        1'b1: duration <= mode ? 4'b1010 : 4'b0101; 
+        1'b0: duration <= mode ? 4'b0101 : 4'b0011;
+        default: duration <= 4'b1010;
     endcase
 end
 

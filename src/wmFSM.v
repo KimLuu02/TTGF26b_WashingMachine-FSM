@@ -48,43 +48,43 @@ always @(*) begin
     case (current_state) 
     IDLE: begin 
         if(warning)
-            next_state = WARN;
+            next_state <= WARN;
         else if(start_cycle)
-            next_state = FILL;
+            next_state <= FILL;
     end
 
     WARN: begin 
         if(!warning)
-            next_state = IDLE;
+            next_state <= IDLE;
     end
 
     FILL: begin 
         if(timer_done)
-            next_state = WASH;
+            next_state <= WASH;
     end
 
     WASH: begin 
         if(timer_done)
-            next_state = RINSE;
+            next_state <= RINSE;
     end
 
     RINSE: begin 
         if(timer_done)
-            next_state = SPIN;
+            next_state <= SPIN;
     end
 
     SPIN: begin 
         if(timer_done)
-            next_state = DONE;
+            next_state <= DONE;
     end
 
     DONE: begin 
         if(timer_done)
-            next_state = IDLE;
+            next_state <= IDLE;
     end
 
     default: begin
-    next_state = IDLE;
+    next_state <= IDLE;
     end
     endcase
 end
@@ -92,57 +92,57 @@ end
 // Output Logic
 always @(*) begin
 
-water_valve = 1'b0;
-wash_motor = 1'b0;
-spin_motor = 1'b0;
-done_led = 1'b0;
-timer_en = 1'b0;
-timer_sel = 1'b0;
+water_valve <= 1'b0;
+wash_motor <= 1'b0;
+spin_motor <= 1'b0;
+done_led <= 1'b0;
+timer_en <= 1'b0;
+timer_sel <= 1'b0;
 
     case(current_state)
 
     WARN: begin
-        done_led = 1'b1;
+        done_led <= 1'b1;
         if(next_state == IDLE)
-            timer_en = 1'b0;
+            timer_en <= 1'b0;
     end
 
     FILL: begin
-        water_valve = 1'b1;
-        timer_en = 1'b1;
+        water_valve <= 1'b1;
+        timer_en <= 1'b1;
         if(next_state == WASH)
-            timer_en = 1'b0;
+            timer_en <= 1'b0;
     end
 
     WASH: begin
-        wash_motor = 1'b1;
-        timer_en = 1'b1;
-        timer_sel = 1'b1;
+        wash_motor <= 1'b1;
+        timer_en <= 1'b1;
+        timer_sel <= 1'b1;
         if(next_state == RINSE)
-            timer_en = 1'b0;
+            timer_en <= 1'b0;
     end
 
     RINSE: begin
-        water_valve = 1'b1;
-        wash_motor = 1'b1;
-        timer_en = 1'b1;
+        water_valve <= 1'b1;
+        wash_motor <= 1'b1;
+        timer_en <= 1'b1;
         if(next_state == SPIN)
-            timer_en = 1'b0;
+            timer_en <= 1'b0;
     end
 
     SPIN: begin
-        spin_motor = 1'b1;
-        timer_en = 1'b1;
-        timer_sel = 1'b1;
+        spin_motor <= 1'b1;
+        timer_en <= 1'b1;
+        timer_sel <= 1'b1;
         if(next_state == DONE)
-            timer_en = 1'b0;
+            timer_en <= 1'b0;
     end
 
     DONE: begin
-        done_led = 1'b1;
-        timer_en = 1'b1;
+        done_led <= 1'b1;
+        timer_en <= 1'b1;
         if(next_state == IDLE)
-            timer_en = 1'b0;
+            timer_en <= 1'b0;
     end
 
     endcase
