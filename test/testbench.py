@@ -11,15 +11,19 @@ GATE_LEVEL = os.getenv("GATES") == "yes"
 @cocotb.test(skip=GATE_LEVEL)
 async def req_1_mode_select(dut):
     """ REQ-1: the selected washing mode shall be forwarded by the UI module """
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.start.value = 0
-    dut.reset_in.value = 1
+    dut.reset_in.value = 0
     dut.mode_select.value = 0
     dut.door_closed.value = 1
 
+    await RisingEdge(dut.clk)
     #Test quick mode
+    dut.reset_in.value = 1
+    await RisingEdge(dut.clk)
+
     dut.mode_select.value = 0
     await RisingEdge(dut.clk)
 
@@ -36,7 +40,7 @@ async def req_1_mode_select(dut):
 @cocotb.test(skip=GATE_LEVEL)
 async def req_2_door_open_warning(dut):
     """ REQ-2: If the door is open, the washing cycle should not start and a warning signal should be given """
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.door_closed.value = 0
@@ -55,7 +59,7 @@ async def req_2_door_open_warning(dut):
 @cocotb.test(skip=GATE_LEVEL)
 async def req_3_reset(dut):
     """ REQ-3: If the user presses the reset button, all modules should go to their reset state """
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.reset_in.value = 1
@@ -75,7 +79,7 @@ async def req_3_reset(dut):
 @cocotb.test(skip=GATE_LEVEL)
 async def req_4_start_cycle(dut):
     """ REQ-4: The washing cycle or warning should only start if the user pressed the start button """
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.reset_in.value = 1
@@ -96,7 +100,7 @@ async def req_4_start_cycle(dut):
 @cocotb.test()
 async def req_5_warning_LED(dut):
     """ REQ-5: If the door is not closed, the washing machine should warn the user """
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.reset_in.value = 1
@@ -118,7 +122,7 @@ async def req_5_warning_LED(dut):
 @cocotb.test()
 async def req_6_warning_LED(dut):
     """ REQ-6:  After succefully starting the washing machine, the washing cycle begins """
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.reset_in.value = 0
@@ -148,7 +152,7 @@ async def req_6_warning_LED(dut):
 @cocotb.test()
 async def req_7_wash_cycles(dut):
     """ REQ-7:  After succefully starting the washing machine, the washing cycle begins """
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.reset_in.value = 0
@@ -219,7 +223,7 @@ async def req_7_wash_cycles(dut):
 @cocotb.test(skip=GATE_LEVEL)
 async def req_8_9_timer(dut):
     """ REQ-8 and 9:  After receiving the signal to start, the timer should start counting the cycles and output a signal, after the timer is done"""
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.reset_in.value = 0
@@ -254,7 +258,7 @@ async def req_8_9_timer(dut):
 @cocotb.test(skip=GATE_LEVEL)
 async def req_10_duration(dut):
     """ REQ-10:  The user can select a mode which changes the duration of each washing cycle"""
-    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
     dut.reset_in.value = 0
