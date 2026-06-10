@@ -8,19 +8,19 @@ async def req_1_mode_select(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.ui_in[0].value = 0
-    dut.rst_n.value = 1
-    dut.ui_in[1].value = 0
-    dut.ui_in[2].value = 1
+    dut.start.value = 0
+    dut.reset_in.value = 1
+    dut.mode_select.value = 0
+    dut.door_closed.value = 1
 
     #Test quick mode
-    dut.ui_in[1].value = 0
+    dut.mode_select.value = 0
     await RisingEdge(dut.clk)
 
     assert dut.mode.value == 0, "REQ-1 failed: mode was not 0"
 
     #Test normal mode
-    dut.ui_in[1].value = 1
+    dut.mode_select.value = 1
 
     await RisingEdge(dut.clk)
     assert dut.mode.value == 1, "REQ-1 failed: mode was not 1"
@@ -33,12 +33,12 @@ async def req_2_door_open_warning(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.ui_in[2].value = 0
-    dut.rst_n.value = 1
-    dut.ui_in[1].value = 0
+    dut.door_closed.value = 0
+    dut.reset_in.value = 1
+    dut.mode_select.value = 0
 
     # Testing
-    dut.ui_in[0].value = 1
+    dut.start.value = 1
     await RisingEdge(dut.clk)
 
     assert dut.warning.value == 1, "REQ-2 failed: warning was not active"
@@ -52,13 +52,13 @@ async def req_3_reset(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.rst_n.value = 1
-    dut.ui_in[1].value = 0
-    dut.ui_in[2].value = 1
-    dut.ui_in[0].value = 1
+    dut.reset_in.value = 1
+    dut.mode_select.value = 0
+    dut.door_closed.value = 1
+    dut.start.value = 1
 
     # Testing
-    dut.rst_n.value = 0
+    dut.reset_in.value = 0
     await RisingEdge(dut.clk)
 
     assert dut.reset_out.value == 0, "REQ-3 failed: reset_out was not 0"
@@ -72,13 +72,13 @@ async def req_4_start_cycle(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.rst_n.value = 1
-    dut.ui_in[1].value = 0
+    dut.reset_in.value = 1
+    dut.mode_select.value = 0
     
 
     # Testing
-    dut.ui_in[2].value = 1
-    dut.ui_in[0].value = 0
+    dut.door_closed.value = 1
+    dut.start.value = 0
     await RisingEdge(dut.clk)
 
     assert dut.start_cycle.value == 0, "REQ-4 failed: Cycle started"
@@ -93,18 +93,18 @@ async def req_5_warning_LED(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.rst_n.value = 1
-    dut.ui_in[1].value = 0
-    dut.ui_in[2].value = 0
+    dut.reset_in.value = 1
+    dut.mode_select.value = 0
+    dut.door_closed.value = 0
 
     # Testing
-    dut.ui_in[0].value = 1
+    dut.start.value = 1
     await RisingEdge(dut.clk)
 
     await ReadOnly()
 
     assert dut.warning.value == 1, "REQ-5 failed: Warning is not on"
-    assert dut.uo_out[3].value == 1, "REQ-5 failed: LED not on"
+    assert dut.done_led.value == 1, "REQ-5 failed: LED not on"
 
     dut._log.info("Req-5 Passed")
 
@@ -114,18 +114,18 @@ async def req_6_warning_LED(dut):
     cocotb.start_soon(Clock(dut.clk, 11, units="ns").start())
 
     #Set initial inputs
-    dut.rst_n.value = 0
-    dut.ui_in[1].value = 0
-    dut.ui_in[2].value = 1
-    dut.ui_in[0].value = 0
+    dut.reset_in.value = 0
+    dut.mode_select.value = 0
+    dut.door_closed.value = 1
+    dut.start.value = 0
 
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.rst_n.value = 1
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
-    dut.ui_in[0].value = 1
+    dut.start.value = 1
 
     await RisingEdge(dut.clk)
 
@@ -133,7 +133,7 @@ async def req_6_warning_LED(dut):
 
     assert dut.timer_en.value == 1, "REQ-6 failed: timer not enabled"
     assert dut.warning.value == 0, "REQ-6 failed: Warning active"
-    assert dut.uo_out[0].value == 1, "REQ-6 failed: water valve was not turned on"
+    assert dut.water_valve.value == 1, "REQ-6 failed: water valve was not turned on"
 
     dut._log.info("Req-6 Passed")
 
@@ -143,67 +143,67 @@ async def req_7_wash_cycles(dut):
     cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
 
     #Set initial inputs
-    dut.rst_n.value = 0
-    dut.ui_in[1].value = 0
-    dut.ui_in[2].value = 1
-    dut.ui_in[0].value = 0
+    dut.reset_in.value = 0
+    dut.mode_select.value = 0
+    dut.door_closed.value = 1
+    dut.start.value = 0
 
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.rst_n.value = 1
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
-    dut.ui_in[0].value = 1
+    dut.start.value = 1
     await RisingEdge(dut.clk)
 
-    dut.ui_in[0].value = 0
+    dut.start.value = 0
 
     await ReadOnly()
 
     # FILL
-    assert dut.uo_out[1].value == 0, "REQ-7 failed: FILL Wash motor active"
-    assert dut.uo_out[2].value == 0, "REQ-7 failed: FILL Spin motor active"
-    assert dut.uo_out[0].value == 1, "REQ-7 failed: FILL Water valve inactive"
+    assert dut.wash_motor.value == 0, "REQ-7 failed: FILL Wash motor active"
+    assert dut.spin_motor.value == 0, "REQ-7 failed: FILL Spin motor active"
+    assert dut.water_valve.value == 1, "REQ-7 failed: FILL Water valve inactive"
 
     await ClockCycles(dut.clk, 5) # 3 cycles
     await ReadOnly()
 
     # WASH
-    assert dut.uo_out[1].value == 1, "REQ-7 failed: WASH Wash motor inactive"
-    assert dut.uo_out[2].value == 0, "REQ-7 failed: WASH Spin motor active"
-    assert dut.uo_out[0].value == 0, "REQ-7 failed: WASH Water valve active"
+    assert dut.wash_motor.value == 1, "REQ-7 failed: WASH Wash motor inactive"
+    assert dut.spin_motor.value == 0, "REQ-7 failed: WASH Spin motor active"
+    assert dut.water_valve.value == 0, "REQ-7 failed: WASH Water valve active"
 
     await ClockCycles(dut.clk, 7) # 5 cycles
     await ReadOnly()
 
     # RINSE
-    assert dut.uo_out[1].value == 1, "REQ-7 failed: RINSE Wash motor inactive"
-    assert dut.uo_out[2].value == 0, "REQ-7 failed: RINSE Spin motor active"
-    assert dut.uo_out[0].value == 1, "REQ-7 failed: RINSE Water valve inactive"
+    assert dut.wash_motor.value == 1, "REQ-7 failed: RINSE Wash motor inactive"
+    assert dut.spin_motor.value == 0, "REQ-7 failed: RINSE Spin motor active"
+    assert dut.water_valve.value == 1, "REQ-7 failed: RINSE Water valve inactive"
 
     await ClockCycles(dut.clk, 5) # 3 cycles
     await ReadOnly()
 
     # SPIN
-    assert dut.uo_out[1].value == 0, "REQ-7 failed: SPIN Wash motor active"
-    assert dut.uo_out[2].value == 1, "REQ-7 failed: SPIN Spin motor inactive"
-    assert dut.uo_out[0].value == 0, "REQ-7 failed: SPIN Water valve active"
+    assert dut.wash_motor.value == 0, "REQ-7 failed: SPIN Wash motor active"
+    assert dut.spin_motor.value == 1, "REQ-7 failed: SPIN Spin motor inactive"
+    assert dut.water_valve.value == 0, "REQ-7 failed: SPIN Water valve active"
 
     await ClockCycles(dut.clk, 7) # 5 cycles
     await ReadOnly()
 
     # DONE
-    assert dut.uo_out[3].value == 1, "REQ-7 failed: led not on"
+    assert dut.done_led.value == 1, "REQ-7 failed: led not on"
 
     await ClockCycles(dut.clk, 5) # 5 cycles
     await ReadOnly()
 
     # IDLE
-    assert dut.uo_out[1].value == 0, "REQ-7 failed: SPIN Wash motor active"
-    assert dut.uo_out[2].value == 0, "REQ-7 failed: SPIN Spin motor active"
-    assert dut.uo_out[0].value == 0, "REQ-7 failed: SPIN Water valve active" 
-    assert dut.uo_out[3].value == 0, "REQ-7 failed: led still on"
+    assert dut.wash_motor.value == 0, "REQ-7 failed: SPIN Wash motor active"
+    assert dut.spin_motor.value == 0, "REQ-7 failed: SPIN Spin motor active"
+    assert dut.water_valve.value == 0, "REQ-7 failed: SPIN Water valve active" 
+    assert dut.done_led.value == 0, "REQ-7 failed: led still on"
 
   
     dut._log.info("Req-7 Passed")
@@ -214,21 +214,21 @@ async def req_8_9_timer(dut):
     cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
 
     #Set initial inputs
-    dut.rst_n.value = 0
-    dut.ui_in[1].value = 0
-    dut.ui_in[2].value = 1
-    dut.ui_in[0].value = 0
+    dut.reset_in.value = 0
+    dut.mode_select.value = 0
+    dut.door_closed.value = 1
+    dut.start.value = 0
 
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.rst_n.value = 1
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
-    dut.ui_in[0].value = 1
+    dut.start.value = 1
     await RisingEdge(dut.clk)
 
-    dut.ui_in[0].value = 0
+    dut.start.value = 0
 
     await ReadOnly()
 
@@ -249,21 +249,21 @@ async def req_10_duration(dut):
     cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
 
     #Set initial inputs
-    dut.rst_n.value = 0
-    dut.ui_in[1].value = 1
-    dut.ui_in[2].value = 1
-    dut.ui_in[0].value = 0
+    dut.reset_in.value = 0
+    dut.mode_select.value = 1
+    dut.door_closed.value = 1
+    dut.start.value = 0
 
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.rst_n.value = 1
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
-    dut.ui_in[0].value = 1
+    dut.start.value = 1
     await RisingEdge(dut.clk)
 
-    dut.ui_in[0].value = 0
+    dut.start.value = 0
 
     await ReadOnly()
 

@@ -15,13 +15,24 @@ module tb ();
 
   // Wire up the inputs and outputs:
   reg clk;
-  reg rst_n;
+  // reg rst_n;
   reg ena;
-  reg [7:0] ui_in;
+  // reg [7:0] ui_in;
   reg [7:0] uio_in;
-  wire [7:0] uo_out;
+  // wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
+
+                      // 7, 6, 5, 4, 3, 2, 1, 0
+  wire [7:0] ui_in = {5'b0, door_closed, mode_select, start}; //  ui_in[2:0] are the control signals
+
+  wire done_led = uo_out[3]; // Done LED
+  wire spin_motor = uo_out[2]; // Spin motor
+  wire wash_motor = uo_out[1]; // Wash motor
+  wire water_valve = uo_out[0]; // Water valve
+  
+  wire rst_n = reset_in; // Active low reset
+
 `ifdef GL_TEST
   wire VPWR = 1'b1;
   wire VGND = 1'b0;
