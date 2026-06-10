@@ -103,18 +103,19 @@ async def req_5_warning_LED(dut):
     cocotb.start_soon(Clock(dut.clk, 20, unit="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     dut.mode_select.value = 0
     dut.door_closed.value = 0
 
     # Testing
-    await RisingEdge(dut.clk)
+    await ClockCycles(dut.clk, 2) # 3 cycles
     #Test quick mode
+    dut.reset_in.value = 0
+    await ClockCycles(dut.clk, 2) 
     dut.reset_in.value = 1
-    await RisingEdge(dut.clk)
     dut.door_closed.value = 0
     dut.start.value = 1
-    await ClockCycles(dut.clk, 5) # 3 cycles
+    await ClockCycles(dut.clk, 2) # 3 cycles
     await RisingEdge(dut.clk)
 
     await ReadOnly()
