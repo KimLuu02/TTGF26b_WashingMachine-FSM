@@ -9,7 +9,7 @@ async def req_1_mode_select(dut):
 
     #Set initial inputs
     dut.start.value = 0
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     dut.mode_select.value = 0
     dut.door_closed.value = 1
 
@@ -34,7 +34,7 @@ async def req_2_door_open_warning(dut):
 
     #Set initial inputs
     dut.door_closed.value = 0
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     dut.mode_select.value = 0
 
     # Testing
@@ -52,16 +52,16 @@ async def req_3_reset(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     dut.mode_select.value = 0
     dut.door_closed.value = 1
     dut.start.value = 1
 
     # Testing
-    dut.reset_in.value = 1
+    dut.reset_in.value = 0
     await RisingEdge(dut.clk)
 
-    assert dut.reset_out.value == 1, "REQ-3 failed: reset_out was not 1"
+    assert dut.reset_out.value == 0, "REQ-3 failed: reset_out was not 0"
     assert dut.timer_en.value == 0, "REQ-3 failed: timer was enabled"
 
     dut._log.info("Req-3 Passed")
@@ -72,7 +72,7 @@ async def req_4_start_cycle(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     dut.mode_select.value = 0
     
 
@@ -93,7 +93,7 @@ async def req_5_warning_LED(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     dut.mode_select.value = 0
     dut.door_closed.value = 0
 
@@ -114,7 +114,7 @@ async def req_6_warning_LED(dut):
     cocotb.start_soon(Clock(dut.clk, 11, units="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 1
+    dut.reset_in.value = 0
     dut.mode_select.value = 0
     dut.door_closed.value = 1
     dut.start.value = 0
@@ -122,7 +122,7 @@ async def req_6_warning_LED(dut):
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
     dut.start.value = 1
@@ -143,7 +143,7 @@ async def req_7_wash_cycles(dut):
     cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 1
+    dut.reset_in.value = 0
     dut.mode_select.value = 0
     dut.door_closed.value = 1
     dut.start.value = 0
@@ -151,7 +151,7 @@ async def req_7_wash_cycles(dut):
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
     dut.start.value = 1
@@ -214,7 +214,7 @@ async def req_8_9_timer(dut):
     cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 1
+    dut.reset_in.value = 0
     dut.mode_select.value = 0
     dut.door_closed.value = 1
     dut.start.value = 0
@@ -222,7 +222,7 @@ async def req_8_9_timer(dut):
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
     dut.start.value = 1
@@ -249,7 +249,7 @@ async def req_10_duration(dut):
     cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
 
     #Set initial inputs
-    dut.reset_in.value = 1
+    dut.reset_in.value = 0
     dut.mode_select.value = 1
     dut.door_closed.value = 1
     dut.start.value = 0
@@ -257,7 +257,7 @@ async def req_10_duration(dut):
     await RisingEdge(dut.clk)
 
     # Testing
-    dut.reset_in.value = 0
+    dut.reset_in.value = 1
     await RisingEdge(dut.clk)
 
     dut.start.value = 1

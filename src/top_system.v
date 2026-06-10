@@ -12,7 +12,6 @@ module top_system(
     output wire wash_motor,
     output wire spin_motor,
     output wire done_led,
-    output wire warning
 );
 
 wire start_cycle;
@@ -22,6 +21,7 @@ wire reset_out;
 wire timer_done;
 wire timer_en;
 wire timer_sel;
+wire warning;
 
 ui_module ui_inst(
     .start(start),

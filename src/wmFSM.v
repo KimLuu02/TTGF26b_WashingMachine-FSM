@@ -28,7 +28,7 @@ reg [2:0] next_state;
 
 // State Register
 always @(posedge clk) begin
-    if (reset_in) 
+    if (!reset_in) 
         current_state <= IDLE;
     else 
         current_state <= next_state;
