@@ -9,12 +9,15 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+The washing machine controller is a modular digital system implemented in Verilog using a finite-state-machine (FSM). 
+The system simulates a simplified washing process and automatically progresses through different washing stages. 
 
 ## How to test
 
-Explain how to use your project
+Use 2 buttons for Start and mode_select and 1 lever for door_closd. Use LEDs to see the output.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+- LED 4
+- Button 2
+- Lever 1
