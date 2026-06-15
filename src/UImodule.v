@@ -13,10 +13,44 @@ module ui_module(
 
 );
 
-assign start_cycle = start & door_closed;
-assign warning = start & ~door_closed;
-assign mode = mode_select;
-assign reset_out = reset_in;
+// assign start_cycle = start & door_closed;
+// assign warning = start & ~door_closed;
+// assign mode = mode_select;
+// assign reset_out = reset_in;
+
+
+always @(*) begin
+    if (mode_select == 1'b1) begin
+        mode <= 1'b1;
+    end else begin
+        mode <= 1'b0;
+    end
+end
+
+always @(*) begin
+    if ((start & ~door_closed) == 1'b1) begin
+        warning <= 1'b1;
+    end else begin
+        warning <= 1'b0;
+    end
+end
+
+always @(*) begin
+    if ((start & door_closed) == 1'b1) begin
+        start_cycle <= 1'b1;
+    end else begin
+        start_cycle <= 1'b0;
+    end
+end
+
+always @(*) begin
+    if ((reset_in) == 1'b1) begin
+        reset_out <= 1'b1;
+    end else begin
+        reset_out <= 1'b0;
+    end
+end
+
 
 `ifdef FORMAL
 always @(*) begin
