@@ -10,7 +10,6 @@ smtbmc
 
 [files]
 ../../src/UImodule.v
-../../src/debouncer.v
 
 [script]
 
