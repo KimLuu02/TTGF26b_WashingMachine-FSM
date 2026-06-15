@@ -48,8 +48,8 @@ end
 endmodule
 
 module debouncer #(
-    parameter CLK_FREQ = 20_000_000, // Beispiel: 50 MHz Takt
-    parameter DEBOUNCE_MS = 20       // 20 Millisekunden Entprellzeit
+    parameter CLK_FREQ = 20_000_000, // 20 MHz 
+    parameter DEBOUNCE_MS = 20       // 20 ms debounce
 )(
     input wire clk,
     input wire button_in,
@@ -57,7 +57,7 @@ module debouncer #(
 );
 
     // Berechnung der benötigten Taktzyklen
-    local sum_cycles = (CLK_FREQ / 1000) * DEBOUNCE_MS;
+    localparam sum_cycles = (CLK_FREQ / 1000) * DEBOUNCE_MS;
     
     reg [$clog2(sum_cycles)-1:0] counter = 0;
     reg sync_0, sync_1;
