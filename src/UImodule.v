@@ -13,43 +13,27 @@ module ui_module(
 
 );
 
-// assign start_cycle = start & door_closed;
-// assign warning = start & ~door_closed;
-// assign mode = mode_select;
-// assign reset_out = reset_in;
+// Debouncing-Module for CLK = 20MHz and DEBOUNCE_MS = 20ms
+    debouncer #(.CLK_FREQ(20_000_000), .DEBOUNCE_MS(20)) db_start (
+        .clk(clk), .button_in(start), .button_out(start_debounced)
+    );
+    
+    debouncer #(.CLK_FREQ(20_000_000), .DEBOUNCE_MS(20)) db_door (
+        .clk(clk), .button_in(door_closed), .button_out(door_debounced)
+    );
 
+    debouncer #(.CLK_FREQ(20_000_000), .DEBOUNCE_MS(20)) db_mode (
+        .clk(clk), .button_in(mode_select), .button_out(mode_debounced)
+    );
 
-always @(*) begin
-    if (mode_select == 1'b1) begin
-        mode = 1'b1;
-    end else begin
-        mode = 1'b0;
-    end
-end
+    debouncer #(.CLK_FREQ(20_000_000), .DEBOUNCE_MS(20)) db_reset (
+        .clk(clk), .button_in(reset_in), .button_out(reset_debounced)
+    );
 
-always @(*) begin
-    if ((start & door_closed) == 1'b1) begin
-        start_cycle = 1'b1;
-    end else begin
-        start_cycle = 1'b0;
-    end
-end
-
-always @(*) begin
-    if ((start & ~door_closed) == 1'b1) begin
-        warning = 1'b1;
-    end else begin
-        warning = 1'b0;
-    end
-end
-
-always @(*) begin
-    if (reset_in == 1'b1) begin
-        reset_out = 1'b1;
-    end else begin
-        reset_out = 1'b0;
-    end
-end
+    assign start_cycle = start_debounced & door_debounced;
+    assign warning     = start_debounced & ~door_debounced;
+    assign mode        = mode_debounced;
+    assign reset_out   = reset_debounced;
 
 
 `ifdef FORMAL
