@@ -37,12 +37,12 @@ module ui_module(
 
 
 `ifdef FORMAL
-always @(*) begin
-    assert(start_cycle == (start & door_closed));
-    assert(warning == (start & ~door_closed));
-    assert(mode == mode_select);
-    assert(reset_out == reset_in);
-end
+    always @(*) begin
+        assert(start_cycle == (start_debounced & door_debounced));
+        assert(warning == (start_debounced & ~door_debounced));
+        assert(mode == mode_debounced);
+        assert(reset_out == reset_debounced);
+    end
 `endif
 
 endmodule
