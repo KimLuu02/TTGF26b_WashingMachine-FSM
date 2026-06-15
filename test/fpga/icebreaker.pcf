@@ -6,8 +6,8 @@ set_io -nowarn RX          6
 set_io -nowarn TX          9
 
 # LEDs and Button
-set_io -nowarn reset_in      10 # btn_n
-set_io -nowarn done_led     11 # Ledr_n
+set_io -nowarn reset_in      10 # BTN_N
+set_io -nowarn LEDR_N     11 
 set_io -nowarn LEDG_N     37
 
 # RGB LED Driver
@@ -44,10 +44,10 @@ set_io -nowarn P1B9       32
 set_io -nowarn P1B10      28
 
 # LEDs and Buttons (PMOD 2)
-set_io -nowarn water_valve       26
-set_io -nowarn wash_motor       27
-set_io -nowarn spin_motor       25
-set_io -nowarn LED4       23
+set_io -nowarn done_led       26
+set_io -nowarn water_valve       27
+set_io -nowarn wash_motor       25
+set_io -nowarn spin_motor       23
 set_io -nowarn LED5       21
 set_io -nowarn start       20 # btn1
 set_io -nowarn mode_select       19 # btn2
