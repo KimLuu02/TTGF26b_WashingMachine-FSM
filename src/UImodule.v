@@ -29,11 +29,17 @@ end
 
 always @(*) begin
     if ((start & door_closed) == 1'b1) begin
-        warning = 1'b0;
         start_cycle = 1'b1;
     end else begin
-        warning = 1'b1;
         start_cycle = 1'b0;
+    end
+end
+
+always @(*) begin
+    if ((start & ~door_closed) == 1'b1) begin
+        warning = 1'b1;
+    end else begin
+        warning = 1'b0;
     end
 end
 
