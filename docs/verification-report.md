@@ -2,7 +2,7 @@
 All verification test cases are implemented in [testbench.py](../test/testbench/testbench.py), which contains all the Cocotb test functions used to verify the requirements specified in the [specifications.md](../docs/specifications.md). Properties were 
 
 ## Testbench Results
-| REQ | VAL TB |  Result | 
+| REQ | VAL TB | Status | 
 | - | - | - | 
 | [REQ-1](specifications.md#req-1---mode-selection) | req_1_mode_select | pass |
 | [REQ-2](specifications.md#req-2---warning-door-open) | req_2_door_open_warning | pass |
@@ -16,7 +16,7 @@ All verification test cases are implemented in [testbench.py](../test/testbench/
 
 ## Formal Verification Results
 
-| Module | Properties |  Result | 
+| Module | Properties | Status | 
 | - | - | - | 
 | [UImodule](../src/UImodule.v) | 'start_cycle', 'warning', 'mode_select', 'reset_in' | [pass](../test/sby/UImodule_verification/PASS) |
 | [timermodule](../src/timermodule.v) | 'mode', 'timer_sel', reset behaviour, timer disable behaviour | [pass](../test/sby/timermodule_verification/PASS) |
