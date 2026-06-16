@@ -4,7 +4,7 @@ In this document testcases for the [requirements](specifications.md) are defined
 ## Summary:
 | REQ | Testcase | Expected Result | 
 | - | - | - | 
-| [REQ-1](specifications.md#req-1---mode-selection) | When selecting the mode in the UI the timer module should receive the correct mode | select_mode = '1' and then output 'mode' = '1' for 'quick mode' |  
+| [REQ-1](specifications.md#req-1---mode-selection) | When selecting the mode in the UI the timer module should receive the correct mode | select_mode = '1' and then output 'mode' = '1' for 'normal mode' |  
 | [REQ-2](specifications.md#req-2---warning-door-open) | If the door is open, the washing cycle should not start and a warning signal should be given | door_closed = 0 and start = 1 then warning = 1 and start_cycle = 0 |  
 | [REQ-3](specifications.md#req-3---reset) | If the user presses the reset button, all modules should go to their reset state | reset = 1 then reset input at FSM and timer should be 1 and timer_en = 0|  
 | [REQ-4](specifications.md#req-4---start) | The washing cycle or warning should only start if the user pressed the start button | door_closed = 1 and start = 0, then timer_en = 0, start_cycle = 0, warning = 0|  
