@@ -4,15 +4,15 @@ All verification test cases are implemented in [testbench.py](../test/testbench/
 ## Testbench Results
 | REQ | VAL TB |  Result | 
 | - | - | - | 
-| [REQ-1](specifications.md#REQ-1) | req_1_mode_select | pass |
-| [REQ-2](specifications.md#REQ-2) | req_2_door_open_warning | pass |
-| [REQ-3](specifications.md#REQ-3) | req_3_reset | pass |
-| [REQ-4](specifications.md#REQ-4) | req_4_start_cycle | pass |
-| [REQ-5](specifications.md#REQ-5) | req_5_warning_LED | pass |
-| [REQ-6](specifications.md#REQ-6) | req_6_warning_LED | pass |
-| [REQ-7](specifications.md#REQ-7) | req_7_wash_cycles | pass |
-| [REQ-8](specifications.md#REQ-8), [REQ-9](specifications.md#REQ-9) | req_8_9_timer | pass |
-| [REQ-10](specifications.md#REQ-10) | req_10_duration | pass |
+| [REQ-1](specifications.md#req-1---mode-selection) | req_1_mode_select | pass |
+| [REQ-2](specifications.md#req-2---warning-door-open) | req_2_door_open_warning | pass |
+| [REQ-3](specifications.md#req-3---reset) | req_3_reset | pass |
+| [REQ-4](specifications.md#req-4---start) | req_4_start_cycle | pass |
+| [REQ-5](specifications.md#req-5---warning-led) | req_5_warning_LED | pass |
+| [REQ-6](specifications.md#req-6---timer-start) | req_6_warning_LED | pass |
+| [REQ-7](specifications.md#req-7---washing-cycle) | req_7_wash_cycles | pass |
+| [REQ-8](specifications.md#req-8---counting), [REQ-9](specifications.md#req-9---done-signal) | req_8_9_timer | pass |
+| [REQ-10](specifications.md#req-10---duration) | req_10_duration | pass |
 
 ## Formal Verification Results
 
