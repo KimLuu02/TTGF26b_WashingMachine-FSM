@@ -52,7 +52,7 @@ With every state change, the timer gets restarted. The following table defines t
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **FILL** | 1 | 0 | 0 | 0 | 1 | 0 |
 | **WASH** | 0 | 1 | 0 | 0 | 1 | 1 |
-| **RINSE** | 1 | 1 | 0 | 0 | 1 | 1 |
+| **RINSE** | 1 | 1 | 0 | 0 | 1 | 0 |
 | **SPIN** | 0 | 0 | 1 | 0 | 1 | 1 |
 | **DONE** | 0 | 0 | 0 | 1 | 1 | 0 |
 

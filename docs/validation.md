@@ -104,7 +104,7 @@ In this document, testcases for the [requirements](specifications.md) and their 
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **FILL** | 1 | 0 | 0 | 0 | 1 | 0 |
 | **WASH** | 0 | 1 | 0 | 0 | 1 | 1 |
-| **RINSE** | 1 | 1 | 0 | 0 | 1 | 1 |
+| **RINSE** | 1 | 1 | 0 | 0 | 1 | 0 |
 | **SPIN** | 0 | 0 | 1 | 0 | 1 | 1 |
 | **DONE** | 0 | 0 | 0 | 1 | 1 | 0 |
 
